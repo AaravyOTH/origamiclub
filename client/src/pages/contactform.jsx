@@ -13,7 +13,7 @@ const Contact = () => {
       return alert("Please fill in all fields");
     } else {
       try {
-        let result = await axios.post("http://localhost:3000/send_email", {
+        let result = await axios.post("https://maytakahashi-github-io-proxy.vercel.app", { // Use the correct deployed server URL
           receiver_email: receiver_email,
           subject: subject,
           message: message,
@@ -21,7 +21,7 @@ const Contact = () => {
         console.log(result.data);
         return alert("Email sent");
       } catch (error) {
-        console.error(error.response.data);
+        console.error(error.response ? error.response.data : error.message);
         return alert("An error occurred");
       }
     }
