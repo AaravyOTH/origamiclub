@@ -7,7 +7,7 @@ import Events from "./pages/Events";
 import Contact from "./pages/contactform";
 import Mission from "./pages/Mission";
 import Team from "./pages/Team";
-import "./assets/css/App.css"
+import "../public/assets/css/App.css"
 import axios from "axios";
 
 const App = () => {
