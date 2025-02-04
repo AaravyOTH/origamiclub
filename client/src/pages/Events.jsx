@@ -7,7 +7,7 @@ const Events = () => (
       {Array.from({ length: 24 }, (_, i) => (
         <img
           key={i}
-          src={`${import.meta.env.BASE_URL}/assets/images/image-${i + 1}.jpg`}
+          src={`/src/assets/images/image-${i + 1}.jpg`}
           alt={`Gallery ${i + 1}`}
         />
       ))}
