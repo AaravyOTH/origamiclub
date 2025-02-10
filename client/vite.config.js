@@ -1,16 +1,13 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  build: {
+    outDir: 'dist', // Ensure the build output directory is 'dist'
+  },
+  base: '/', // Set the base URL for deployment. Use '/' for custom domains or '/your-repo-name/' for GitHub Pages
   server: {
-    proxy: {
-      '/*': {
-        target: 'https://maytakahashi-github-io-server-qr1v19b4y.vercel.app', // Replace with your backend server URL for local development
-        changeOrigin: true,
-        secure: false,
-        }
-    }
-  }
+    port: 5173, // You can specify the port for the development server
+  },
 });
