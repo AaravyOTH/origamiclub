@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "homepage": ".",
   "type": "module",
-  "proxy": "https://maytakahashi-github-io-proxy.vercel.app",
   "scripts": {
     "dev": "vite",
     "predeploy": "npm run build",
