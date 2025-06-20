@@ -19,29 +19,17 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies (client)
-        run: npm install --prefix client
+      - name: Install dependencies
+        run: npm install
 
-      - name: Install dependencies (server)
-        run: npm install --prefix server
+      - name: Build project
+        run: npm run build
 
-      - name: Build project (client)
-        run: npm run build --prefix client
-
-      - name: Build project (server)
-        run: npm run start --prefix server
-
-      - name: Upload client production files
+      - name: Upload production files
         uses: actions/upload-artifact@v4
         with:
-          name: client-dist
-          path: client/dist
-
-      - name: Upload server production files
-        uses: actions/upload-artifact@v4
-        with:
-          name: server-dist
-          path: server/dist
+          name: production-dist
+          path: dist
 
   deploy:
     name: Deploy
@@ -50,20 +38,14 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: Download client artifact
+      - name: Download production artifact
         uses: actions/download-artifact@v4
         with:
-          name: client-dist
-          path: ./dist/client
-
-      - name: Download server artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: server-dist
-          path: ./dist/server
+          name: production-dist
+          path: ./dist
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/client
+          publish_dir: ./dist
