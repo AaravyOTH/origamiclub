@@ -235,7 +235,7 @@
         </h2>
         <p class="text-xl leading-relaxed text-center">
           RU Origami Club brings together students who are passionate about the
-          ancient art of paper folding. Whether you’re a complete beginner or a
+          art of paper folding. Whether you’re a complete beginner or a
           seasoned folder, our biweekly meetings and special workshops offer
           something for everyone. Come for the folds, stay for the friends!
         </p>
@@ -249,19 +249,19 @@
           Gallery
         </h2>
 
-        <div
-          class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
-        >
-          <!-- images 1-16 only (removed #17 + Vagheesan) -->
-          <template id="gallery-template">
-            <div class="origami-border rounded-lg overflow-hidden">
-              <img
-                src=""
-                alt="Origami creation"
-                class="object-cover w-full h-48"
-              />
-            </div>
-          </template>
+        <div class="relative w-full max-w-4xl mx-auto">
+          <div id="carousel" class="overflow-hidden rounded-lg relative">
+            <!-- Slides will be injected here -->
+          </div>
+
+          <!-- Navigation buttons -->
+        <button id="prevBtn" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-origami-pink-dark text-white p-2 rounded-full shadow-md hover:bg-origami-pink z-10">
+          <i class="fas fa-chevron-left text-xl"></i>
+        </button>
+        <button id="nextBtn" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-origami-pink-dark text-white p-2 rounded-full shadow-md hover:bg-origami-pink z-10">
+          <i class="fas fa-chevron-right text-xl"></i>
+        </button>
+
         </div>
       </div>
     </section>
@@ -471,11 +471,6 @@
           image: "/Images/headshots/jamieg.jpg",
         },
         {
-          name: "Olivia Huang",
-          position: "Social Media Manager",
-          image: "/Images/headshots/oliviah.jpg",
-        },
-        {
           name: "Josh Jazmin",
           position: "Historian / Photographer",
           image: "/Images/headshots/joshj.jpg",
@@ -522,18 +517,39 @@
       });
 
       /* ----------  Gallery (1-16)  ---------- */
+     /* ----------  Gallery Carousel  ---------- */
+      const carouselContainer = document.getElementById("carousel");
       const galleryPath = "/Images";
-      const galleryEl = document.querySelector("#gallery template")
-        .content;
-      const galleryGrid = document.querySelector("#gallery .grid");
-      for (let i = 1; i <= 16; i++) {
-        const clone = galleryEl.cloneNode(true);
-        const img = clone.querySelector("img");
-        img.src = `${galleryPath}/${String(i).padStart(2, "0")}.jpg`;
-        img.alt = `Origami creation ${i}`;
-        galleryGrid.appendChild(clone);
+      const totalImages = 16;
+      let currentSlide = 0;
+
+      // Create slides
+      for (let i = 0; i < totalImages; i++) {
+        const img = document.createElement("img");
+        img.src = `${galleryPath}/${String(i + 1).padStart(2, "0")}.jpg`;
+        img.alt = `Origami creation ${i + 1}`;
+        img.className = "carousel-item w-full h-[32rem] object-cover rounded-lg" + (i === 0 ? " active" : "");
+        carouselContainer.appendChild(img);
       }
-    </script>
+
+      // Carousel logic
+      const slides = document.querySelectorAll("#carousel .carousel-item");
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("active", i === index);
+        });
+      }
+
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        currentSlide = (currentSlide - 1 + totalImages) % totalImages;
+        showSlide(currentSlide);
+      });
+
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        currentSlide = (currentSlide + 1) % totalImages;
+        showSlide(currentSlide);
+      });
+      </script>
   </body>
 </html>
-```
+
