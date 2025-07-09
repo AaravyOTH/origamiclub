@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RU Origami Club</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!--  Font-Awesome 6 (brands gives us Instagram + GroupMe) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Patrick+Hand:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "origami-pink": "#FF7EB9",
+              "origami-pink-dark": "#FF5CAA",
+              "origami-blue": "#7EB8FF",
+              "origami-blue-dark": "#569DFF",
+            },
+            fontFamily: {
+              patrickHand: ["Patrick Hand", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* ====  GENERAL  ==== */
+      body {
+        font-family: "Patrick Hand", sans-serif;
+        background-color: #fff5f9;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff7eb9' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+
+      /* ====  CAROUSEL  ==== */
+      .carousel-item {
+        display: none;
+        transition: transform 0.5s ease-in-out;
+      }
+      .carousel-item.active {
+        display: block;
+      }
+
+      /* ====  TEAM  ==== */
+      .team-card {
+        transition: all 0.3s ease;
+      }
+      .team-card:hover {
+        transform: translateY(-10px);
+      }
+      .origami-border {
+        position: relative;
+      }
+      .origami-border::before {
+        content: "";
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+        background: linear-gradient(135deg, #ff7eb9 0%, #7eb8ff 100%);
+        z-index: -1;
+        border-radius: 10px;
+        transform: rotate(-2deg);
+      }
+
+      /* ====  FAQ  ==== */
+      .faq-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+      .faq-item.active .faq-content {
+        max-height: 200px;
+      }
+    </style>
+  </head>
+
+  <body class="font-patrickHand text-gray-800 scroll-smooth">
+    <!-- =================  NAVBAR  ================= -->
+    <nav class="fixed w-full z-50 top-0 py-3">
+      <div class="container mx-auto px-4">
+        <div class="bg-white bg-opacity-90 rounded-full shadow-lg py-3 px-6">
+          <div class="flex items-center justify-between">
+            <a
+              href="#hero"
+              class="text-origami-pink-dark text-2xl font-bold flex items-center"
+            >
+              <img
+                src="/Images/crane.svg"
+                alt="Origami Logo"
+                class="w-9 h-9 mr-3"
+              />
+              RU Origami
+            </a>
+
+            <!-- Desktop links -->
+            <div class="hidden md:flex items-center space-x-6">
+              <a
+                href="#about"
+                class="text-xl text-gray-600 hover:text-origami-pink-dark duration-200"
+                >About</a
+              >
+              <a
+                href="#gallery"
+                class="text-xl text-gray-600 hover:text-origami-pink-dark duration-200"
+                >Gallery</a
+              >
+              <a
+                href="#team"
+                class="text-xl text-gray-600 hover:text-origami-pink-dark duration-200"
+                >Team</a
+              >
+              <a
+                href="#faqs"
+                class="text-xl text-gray-600 hover:text-origami-pink-dark duration-200"
+                >FAQs</a
+              >
+              <a
+                href="#contact"
+                class="text-xl text-gray-600 hover:text-origami-pink-dark duration-200"
+                >Contact</a
+              >
+
+              <!--  Social Icons  -->
+              <a
+                href="https://www.instagram.com/ruorigamiclub/"
+                target="_blank"
+                class="text-origami-pink-dark hover:text-origami-pink duration-200"
+              >
+                <i class="fa-brands fa-instagram text-xl"></i>
+              </a>
+              <a
+                href="https://groupme.com/join_group/103678241/lZhF26Dc"
+                target="_blank"
+                class="text-origami-pink-dark hover:text-origami-pink duration-200"
+                title="Join our GroupMe"
+              >
+                <i class="fa-regular fa-message"></i>
+              </a>
+            </div>
+
+            <!-- Mobile hamburger -->
+            <button
+              id="menu-toggle"
+              class="md:hidden text-gray-600 hover:text-origami-pink-dark focus:outline-none"
+            >
+              <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MOBILE MENU -->
+      <div id="mobile-menu" class="hidden md:hidden container mx-auto px-4 mt-2">
+        <div
+          class="bg-white bg-opacity-90 rounded-xl shadow-lg p-4 flex flex-col space-y-3"
+        >
+          <a
+            href="#about"
+            class="text-xl text-gray-600 hover:text-origami-pink-dark duration-200"
+            >About</a
+          >
+          <a
+            href="#gallery"
+            class="text-xl text-gray-600 hover:text-origami-pink-dark duration-200"
+            >Gallery</a
+          >
+          <a
+            href="#team"
+            class="text-xl text-gray-600 hover:text-origami-pink-dark duration-200"
+            >Team</a
+          >
+          <a
+            href="#faqs"
+            class="text-xl text-gray-600 hover:text-origami-pink-dark duration-200"
+            >FAQs</a
+          >
+          <a
+            href="#contact"
+            class="text-xl text-gray-600 hover:text-origami-pink-dark duration-200"
+            >Contact</a
+          >
+          <hr />
+          <div class="flex space-x-6 pl-1">
+            <a
+              href="https://www.instagram.com/ruorigamiclub/"
+              target="_blank"
+              class="text-origami-pink-dark hover:text-origami-pink duration-200"
+              ><i class="fa-brands fa-instagram text-2xl"></i
+            ></a>
+            <a
+              href="https://groupme.com/join_group/000000000/RUOrigamiClub"
+              target="_blank"
+              class="text-origami-pink-dark hover:text-origami-pink duration-200"
+              ><i class="fa-brands fa-groupme text-2xl"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- =================  HERO  ================= -->
+    <section
+      id="hero"
+      class="pt-32 pb-20 text-center bg-gradient-to-b from-pink-50 to-white"
+    >
+      <h1 class="text-5xl sm:text-6xl font-extrabold text-origami-pink-dark">
+        RU Origami Club
+      </h1>
+      <p class="mt-4 text-2xl text-gray-600">
+        Crafting community one fold at a time.
+      </p>
+    </section>
+
+    <!-- =================  ABOUT  ================= -->
+    <section id="about" class="py-20">
+      <div class="container mx-auto px-4 md:w-3/4">
+        <h2 class="text-4xl font-bold text-center text-origami-pink-dark mb-6">
+          About RU Origami Club
+        </h2>
+        <p class="text-xl leading-relaxed text-center">
+          RU Origami Club brings together students who are passionate about the
+          ancient art of paper folding. Whether you’re a complete beginner or a
+          seasoned folder, our biweekly meetings and special workshops offer
+          something for everyone. Come for the folds, stay for the friends!
+        </p>
+      </div>
+    </section>
+
+    <!-- =================  GALLERY  ================= -->
+    <section id="gallery" class="py-20 bg-pink-50/60">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center text-origami-pink-dark mb-10">
+          Gallery
+        </h2>
+
+        <div
+          class="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6"
+        >
+          <!-- images 1-16 only (removed #17 + Vagheesan) -->
+          <template id="gallery-template">
+            <div class="origami-border rounded-lg overflow-hidden">
+              <img
+                src=""
+                alt="Origami creation"
+                class="object-cover w-full h-48"
+              />
+            </div>
+          </template>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================  TEAM  ================= -->
+    <section id="team" class="py-20">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center text-origami-pink-dark mb-10">
+          Meet the Team
+        </h2>
+
+        <div
+          id="team-container"
+          class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+        ></div>
+      </div>
+    </section>
+
+    <!-- =================  FAQ  ================= -->
+    <section id="faqs" class="py-20 bg-pink-50/60">
+      <div class="container mx-auto px-4 md:w-3/4">
+        <h2 class="text-4xl font-bold text-center text-origami-pink-dark mb-8">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-4">
+          <!-- FAQ ITEM -->
+          <div class="faq-item bg-white rounded-lg shadow-lg">
+            <button
+              class="w-full px-6 py-4 text-left flex justify-between items-center"
+            >
+              <span class="text-xl font-semibold">
+                When and where do you meet?
+              </span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="faq-content px-6 pb-6 text-lg">
+              Starting in the Fall 2025 semester, we will be meeting biweekly on
+              Mondays from 8-9:30 PM in the Busch Student Center, Room 120ABC.
+            </div>
+          </div>
+
+          <!-- FAQ ITEM -->
+          <div class="faq-item bg-white rounded-lg shadow-lg">
+            <button
+              class="w-full px-6 py-4 text-left flex justify-between items-center"
+            >
+              <span class="text-xl font-semibold">
+                Do I need to bring my own paper?
+              </span>
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="faq-content px-6 pb-6 text-lg">
+              We provide materials for all our regular meetings, including any
+              additional paper or tools necessary for special events and crafts.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================  CONTACT  ================= -->
+    <section id="contact" class="py-20">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-4xl font-bold text-origami-pink-dark mb-6">Contact</h2>
+        <p class="text-xl">
+          Have a question? Email us at
+          <a
+            href="mailto:ruorigamiclub@gmail.com"
+            class="text-origami-pink-dark underline"
+            >ruorigamiclub@gmail.com</a
+          >
+        </p>
+      </div>
+    </section>
+
+    <!-- =================  FOOTER  ================= -->
+    <footer class="bg-white py-6 border-t border-pink-100">
+      <div
+        class="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0"
+      >
+        <p class="text-lg text-gray-600">&copy; 2024 RU Origami Club</p>
+
+        <div class="flex items-center space-x-6">
+          <a
+            href="https://www.instagram.com/ruorigamiclub/"
+            target="_blank"
+            class="text-origami-pink-dark hover:text-origami-pink duration-200"
+            ><i class="fa-brands fa-instagram text-2xl"></i
+          ></a>
+          <a
+            href="https://groupme.com/join_group/000000000/RUOrigamiClub"
+            target="_blank"
+            class="text-origami-pink-dark hover:text-origami-pink duration-200"
+            ><i class="fa-brands fa-groupme text-2xl"></i
+          ></a>
+        </div>
+
+        <p class="text-lg text-gray-600">
+          Made with 🩷 by Aarav Y &amp; Azam
+        </p>
+      </div>
+    </footer>
+
+    <!-- ========================================================= -->
+    <!-- =================  SCRIPTS  ============================= -->
+    <!-- ========================================================= -->
+    <script>
+      /* ----------  mobile menu  ---------- */
+      document
+        .getElementById("menu-toggle")
+        .addEventListener("click", () =>
+          document.getElementById("mobile-menu").classList.toggle("hidden")
+        );
+
+      /* ----------  nav link active on scroll  ---------- */
+      window.addEventListener("scroll", () => {
+        const sections = document.querySelectorAll("section");
+        const navLinks = document.querySelectorAll('nav a[href^="#"]');
+        let current = "";
+        sections.forEach((sec) => {
+          const top = sec.offsetTop - 160;
+          if (scrollY >= top) current = sec.id;
+        });
+        navLinks.forEach((link) => {
+          link.classList.toggle(
+            "text-origami-pink-dark",
+            link.getAttribute("href") === `#${current}`
+          );
+          link.classList.toggle(
+            "text-gray-600",
+            link.getAttribute("href") !== `#${current}`
+          );
+        });
+      });
+
+      /* ----------  TEAM  ---------- */
+      const teamMembers = [
+        //  President / Execs on top (Trevor & Eldrin next to May)
+        {
+          name: "May Takahashi",
+          position: "President",
+          image: "/Images/headshots/mayt.jpg",
+        },
+        {
+          name: "Trevor Lee",
+          position: "Treasurer",
+          image: "/Images/headshots/trevorl.jpg",
+        },
+        {
+          name: "Eldrin Borja",
+          position: "Secretary",
+          image: "/Images/headshots/eldrinb.jpg",
+        },
+
+        // VPs
+        {
+          name: "Keith Miquela",
+          position: "VP of Internal Affairs",
+          image: "/Images/headshots/keithm.jpg",
+        },
+        {
+          name: "Olivia Sussman",
+          position: "VP of Outreach",
+          image: "/Images/headshots/olivias.jpg",
+        },
+        {
+          name: "Emily Liu",
+          position: "VP of Media",
+          image: "/Images/headshots/emilyl.jpg",
+        },
+        {
+          name: "Salil Garud",
+          position: "VP of Finance",
+          image: "/Images/headshots/salilg.jpg",
+        },
+
+        // Directors / Managers
+        {
+          name: "Gargi Bansu",
+          position: "Instructor",
+          image: "/Images/headshots/gargib.jpg",
+        },
+        {
+          name: "Aarav Yadav",
+          position: "Web Developer",
+          image: "/Images/headshots/aaravy.jpg",
+        },
+        {
+          name: "Azam Ahmed",
+          position: "Web Developer",
+          image: "/Images/headshots/azama.jpg",
+        },
+        {
+          name: "Beomgi Jung",
+          position: "Community Outreach Director",
+          image: "/Images/headshots/beomgij.jpg",
+        },
+        {
+          name: "Jasmine Duong",
+          position: "Community Outreach Director",
+          image: "/Images/headshots/jasmined.jpg",
+        },
+        {
+          name: "Jamie Giang",
+          position: "Community Outreach Director",
+          image: "/Images/headshots/jamieg.jpg",
+        },
+        {
+          name: "Olivia Huang",
+          position: "Social Media Manager",
+          image: "/Images/headshots/oliviah.jpg",
+        },
+        {
+          name: "Josh Jazmin",
+          position: "Historian / Photographer",
+          image: "/Images/headshots/joshj.jpg",
+        },
+        {
+          name: "Reyna Boyd",
+          position: "Content Coordinator",
+          image: "/Images/headshots/reynab.jpg",
+        },
+        {
+          name: "Nikhil Pai",
+          position: "Fundraising Coordinator",
+          image: "/Images/headshots/nikhilp.jpg",
+        },
+        {
+          name: "Daniella Rodriguez",
+          position: "Fundraising Coordinator",
+          image: "/Images/headshots/daniellar.jpg",
+        },
+      ];
+
+      const teamContainer = document.getElementById("team-container");
+      teamMembers.forEach(({ name, position, image }) => {
+        const card = document.createElement("div");
+        card.className = "team-card bg-white rounded-xl shadow-lg";
+        card.innerHTML = `
+          <div class="origami-border rounded-lg overflow-hidden mx-4 mt-4 mb-4">
+            <img src="${image}" alt="${name}" class="w-full h-64 object-cover rounded-lg" />
+          </div>
+          <div class="p-4 text-center">
+            <h3 class="font-bold text-xl mb-1">${name}</h3>
+            <p class="text-origami-pink-dark">${position}</p>
+          </div>
+        `;
+        teamContainer.appendChild(card);
+      });
+
+      /* ----------  FAQ Accordion  ---------- */
+      document.querySelectorAll(".faq-item button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const parent = btn.parentElement;
+          parent.classList.toggle("active");
+        });
+      });
+
+      /* ----------  Gallery (1-16)  ---------- */
+      const galleryPath = "/Images";
+      const galleryEl = document.querySelector("#gallery template")
+        .content;
+      const galleryGrid = document.querySelector("#gallery .grid");
+      for (let i = 1; i <= 16; i++) {
+        const clone = galleryEl.cloneNode(true);
+        const img = clone.querySelector("img");
+        img.src = `${galleryPath}/${String(i).padStart(2, "0")}.jpg`;
+        img.alt = `Origami creation ${i}`;
+        galleryGrid.appendChild(clone);
+      }
+    </script>
+  </body>
+</html>
+```
