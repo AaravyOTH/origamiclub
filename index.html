@@ -231,7 +231,7 @@
     <section id="about" class="py-20">
       <div class="container mx-auto px-4 md:w-3/4">
         <h2 class="text-4xl font-bold text-center text-origami-pink-dark mb-6">
-          About RU Origami Club
+          About Us
         </h2>
         <p class="text-xl leading-relaxed text-center">
           RU Origami Club brings together students who are passionate about the
@@ -531,6 +531,12 @@
         img.className = "carousel-item w-full h-[32rem] object-cover rounded-lg" + (i === 0 ? " active" : "");
         carouselContainer.appendChild(img);
       }
+      <button id="prevBtn" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-origami-pink-dark text-white p-2 rounded-full shadow-md hover:bg-origami-pink z-10">
+        <i class="fas fa-chevron-left text-xl"></i>
+      </button>
+      <button id="nextBtn" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-origami-pink-dark text-white p-2 rounded-full shadow-md hover:bg-origami-pink z-10">
+        <i class="fas fa-chevron-right text-xl"></i>
+      </button>
 
       // Carousel logic
       const slides = document.querySelectorAll("#carousel .carousel-item");
