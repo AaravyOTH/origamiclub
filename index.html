@@ -369,193 +369,120 @@
     <!-- ========================================================= -->
     <!-- =================  SCRIPTS  ============================= -->
     <!-- ========================================================= -->
-    <script>
-      /* ----------  mobile menu  ---------- */
-      document
-        .getElementById("menu-toggle")
-        .addEventListener("click", () =>
-          document.getElementById("mobile-menu").classList.toggle("hidden")
+  <script>
+    /* ----------  mobile menu  ---------- */
+    document
+      .getElementById("menu-toggle")
+      .addEventListener("click", () =>
+        document.getElementById("mobile-menu").classList.toggle("hidden")
+      );
+
+    /* ----------  nav link active on scroll  ---------- */
+    window.addEventListener("scroll", () => {
+      const sections = document.querySelectorAll("section");
+      const navLinks = document.querySelectorAll('nav a[href^="#"]');
+      let current = "";
+      sections.forEach((sec) => {
+        const top = sec.offsetTop - 160;
+        if (scrollY >= top) current = sec.id;
+      });
+      navLinks.forEach((link) => {
+        link.classList.toggle(
+          "text-origami-pink-dark",
+          link.getAttribute("href") === `#${current}`
         );
-
-      /* ----------  nav link active on scroll  ---------- */
-      window.addEventListener("scroll", () => {
-        const sections = document.querySelectorAll("section");
-        const navLinks = document.querySelectorAll('nav a[href^="#"]');
-        let current = "";
-        sections.forEach((sec) => {
-          const top = sec.offsetTop - 160;
-          if (scrollY >= top) current = sec.id;
-        });
-        navLinks.forEach((link) => {
-          link.classList.toggle(
-            "text-origami-pink-dark",
-            link.getAttribute("href") === `#${current}`
-          );
-          link.classList.toggle(
-            "text-gray-600",
-            link.getAttribute("href") !== `#${current}`
-          );
-        });
+        link.classList.toggle(
+          "text-gray-600",
+          link.getAttribute("href") !== `#${current}`
+        );
       });
+    });
 
-      /* ----------  TEAM  ---------- */
-      const teamMembers = [
-        //  President / Execs on top (Trevor & Eldrin next to May)
-        {
-          name: "May Takahashi",
-          position: "President",
-          image: "/Images/headshots/mayt.jpg",
-        },
-        {
-          name: "Trevor Lee",
-          position: "Treasurer",
-          image: "/Images/headshots/trevorl.jpg",
-        },
-        {
-          name: "Eldrin Borja",
-          position: "Secretary",
-          image: "/Images/headshots/eldrinb.jpg",
-        },
+    /* ----------  TEAM  ---------- */
+    const teamMembers = [
+      { name: "May Takahashi", position: "President", image: "/Images/headshots/mayt.jpg" },
+      { name: "Trevor Lee", position: "Treasurer", image: "/Images/headshots/trevorl.jpg" },
+      { name: "Eldrin Borja", position: "Secretary", image: "/Images/headshots/eldrinb.jpg" },
+      { name: "Keith Miquela", position: "VP of Internal Affairs", image: "/Images/headshots/keithm.jpg" },
+      { name: "Olivia Sussman", position: "VP of Outreach", image: "/Images/headshots/olivias.jpg" },
+      { name: "Emily Liu", position: "VP of Media", image: "/Images/headshots/emilyl.jpg" },
+      { name: "Salil Garud", position: "VP of Finance", image: "/Images/headshots/salilg.jpg" },
+      { name: "Gargi Bansu", position: "Instructor", image: "/Images/headshots/gargib.jpg" },
+      { name: "Aarav Yadav", position: "Web Developer", image: "/Images/headshots/aaravy.jpg" },
+      { name: "Azam Ahmed", position: "Web Developer", image: "/Images/headshots/azama.jpg" },
+      { name: "Beomgi Jung", position: "Community Outreach Director", image: "/Images/headshots/beomgij.jpg" },
+      { name: "Jasmine Duong", position: "Community Outreach Director", image: "/Images/headshots/jasmined.jpg" },
+      { name: "Jamie Giang", position: "Community Outreach Director", image: "/Images/headshots/jamieg.jpg" },
+      { name: "Josh Jazmin", position: "Historian / Photographer", image: "/Images/headshots/joshj.jpg" },
+      { name: "Reyna Boyd", position: "Content Coordinator", image: "/Images/headshots/reynab.jpg" },
+      { name: "Nikhil Pai", position: "Fundraising Coordinator", image: "/Images/headshots/nikhilp.jpg" },
+      { name: "Daniella Rodriguez", position: "Fundraising Coordinator", image: "/Images/headshots/daniellar.jpg" },
+    ];
 
-        // VPs
-        {
-          name: "Keith Miquela",
-          position: "VP of Internal Affairs",
-          image: "/Images/headshots/keithm.jpg",
-        },
-        {
-          name: "Olivia Sussman",
-          position: "VP of Outreach",
-          image: "/Images/headshots/olivias.jpg",
-        },
-        {
-          name: "Emily Liu",
-          position: "VP of Media",
-          image: "/Images/headshots/emilyl.jpg",
-        },
-        {
-          name: "Salil Garud",
-          position: "VP of Finance",
-          image: "/Images/headshots/salilg.jpg",
-        },
+    const teamContainer = document.getElementById("team-container");
+    teamMembers.forEach(({ name, position, image }) => {
+      const card = document.createElement("div");
+      card.className = "team-card bg-white rounded-xl shadow-lg";
+      card.innerHTML = `
+        <div class="origami-border rounded-lg overflow-hidden mx-4 mt-4 mb-4">
+          <img src="${image}" alt="${name}" class="w-full h-64 object-cover rounded-lg" />
+        </div>
+        <div class="p-4 text-center">
+          <h3 class="font-bold text-xl mb-1">${name}</h3>
+          <p class="text-origami-pink-dark">${position}</p>
+        </div>
+      `;
+      teamContainer.appendChild(card);
+    });
 
-        // Directors / Managers
-        {
-          name: "Gargi Bansu",
-          position: "Instructor",
-          image: "/Images/headshots/gargib.jpg",
-        },
-        {
-          name: "Aarav Yadav",
-          position: "Web Developer",
-          image: "/Images/headshots/aaravy.jpg",
-        },
-        {
-          name: "Azam Ahmed",
-          position: "Web Developer",
-          image: "/Images/headshots/azama.jpg",
-        },
-        {
-          name: "Beomgi Jung",
-          position: "Community Outreach Director",
-          image: "/Images/headshots/beomgij.jpg",
-        },
-        {
-          name: "Jasmine Duong",
-          position: "Community Outreach Director",
-          image: "/Images/headshots/jasmined.jpg",
-        },
-        {
-          name: "Jamie Giang",
-          position: "Community Outreach Director",
-          image: "/Images/headshots/jamieg.jpg",
-        },
-        {
-          name: "Josh Jazmin",
-          position: "Historian / Photographer",
-          image: "/Images/headshots/joshj.jpg",
-        },
-        {
-          name: "Reyna Boyd",
-          position: "Content Coordinator",
-          image: "/Images/headshots/reynab.jpg",
-        },
-        {
-          name: "Nikhil Pai",
-          position: "Fundraising Coordinator",
-          image: "/Images/headshots/nikhilp.jpg",
-        },
-        {
-          name: "Daniella Rodriguez",
-          position: "Fundraising Coordinator",
-          image: "/Images/headshots/daniellar.jpg",
-        },
-      ];
-
-      const teamContainer = document.getElementById("team-container");
-      teamMembers.forEach(({ name, position, image }) => {
-        const card = document.createElement("div");
-        card.className = "team-card bg-white rounded-xl shadow-lg";
-        card.innerHTML = `
-          <div class="origami-border rounded-lg overflow-hidden mx-4 mt-4 mb-4">
-            <img src="${image}" alt="${name}" class="w-full h-64 object-cover rounded-lg" />
-          </div>
-          <div class="p-4 text-center">
-            <h3 class="font-bold text-xl mb-1">${name}</h3>
-            <p class="text-origami-pink-dark">${position}</p>
-          </div>
-        `;
-        teamContainer.appendChild(card);
+    /* ----------  FAQ Accordion  ---------- */
+    document.querySelectorAll(".faq-item button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const parent = btn.parentElement;
+        parent.classList.toggle("active");
       });
+    });
 
-      /* ----------  FAQ Accordion  ---------- */
-      document.querySelectorAll(".faq-item button").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const parent = btn.parentElement;
-          parent.classList.toggle("active");
-        });
+    /* ----------  Gallery Carousel  ---------- */
+    const carouselContainer = document.getElementById("carousel");
+    const galleryPath = "/Images";
+    const totalImages = 16;
+    let currentSlide = 0;
+
+    for (let i = 0; i < totalImages; i++) {
+      const img = document.createElement("img");
+      img.src = `${galleryPath}/${String(i+1).padStart(2, "0")}.jpg`;
+      img.alt = `Origami creation ${i+1}`;
+      img.className = [
+        "carousel-item",
+        "w-full",
+        "h-[32rem]",
+        "object-cover",
+        "rounded-lg",
+        i === 0 ? "active" : "",
+      ].join(" ");
+      carouselContainer.appendChild(img);
+    }
+
+    const slides = document.querySelectorAll("#carousel .carousel-item");
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle("active", i === index);
       });
+    }
 
-      /* ----------  Gallery (1-16)  ---------- */
-     /* ----------  Gallery Carousel  ---------- */
-      const carouselContainer = document.getElementById("carousel");
-      const galleryPath = "/Images";
-      const totalImages = 16;
-      let currentSlide = 0;
+    document.getElementById("prevBtn").addEventListener("click", () => {
+      currentSlide = (currentSlide - 1 + totalImages) % totalImages;
+      showSlide(currentSlide);
+    });
 
-      // Create slides
-      for (let i = 0; i < totalImages; i++) {
-        const img = document.createElement("img");
-        img.src = `${galleryPath}/${String(i + 1).padStart(2, "0")}.jpg`;
-        img.alt = `Origami creation ${i + 1}`;
-        img.className = "carousel-item w-full h-[32rem] object-cover rounded-lg" + (i === 0 ? " active" : "");
-        carouselContainer.appendChild(img);
-      }
-      <button id="prevBtn" class="absolute top-1/2 left-4 transform -translate-y-1/2 bg-origami-pink-dark text-white p-2 rounded-full shadow-md hover:bg-origami-pink z-10">
-        <i class="fas fa-chevron-left text-xl"></i>
-      </button>
-      <button id="nextBtn" class="absolute top-1/2 right-4 transform -translate-y-1/2 bg-origami-pink-dark text-white p-2 rounded-full shadow-md hover:bg-origami-pink z-10">
-        <i class="fas fa-chevron-right text-xl"></i>
-      </button>
-
-      // Carousel logic
-      const slides = document.querySelectorAll("#carousel .carousel-item");
-      function showSlide(index) {
-        slides.forEach((slide, i) => {
-          slide.classList.toggle("active", i === index);
-        });
-      }
-
-      document.getElementById("prevBtn").addEventListener("click", () => {
-        currentSlide = (currentSlide - 1 + totalImages) % totalImages;
-        showSlide(currentSlide);
-      });
-
-      document.getElementById("nextBtn").addEventListener("click", () => {
-        currentSlide = (currentSlide + 1) % totalImages;
-        showSlide(currentSlide);
-      });
+    document.getElementById("nextBtn").addEventListener("click", () => {
+      currentSlide = (currentSlide + 1) % totalImages;
+      showSlide(currentSlide);
+    });
       </script>
+
   </body>
 </html>
 
